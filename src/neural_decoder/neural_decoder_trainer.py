@@ -13,6 +13,16 @@ from .model import GRUDecoder
 from .dataset import SpeechDataset
 
 
+def getDatasetLoadersSentences(
+    datasetName,
+    batchSize,
+):
+    with open(datasetName, "rb") as handle:
+        loadedData = pickle.load(handle)
+
+    return loadedData
+
+
 def getDatasetLoaders(
     datasetName,
     batchSize,
@@ -54,6 +64,7 @@ def getDatasetLoaders(
     )
 
     return train_loader, test_loader, loadedData
+
 
 def trainModel(args):
     os.makedirs(args["outputDir"], exist_ok=True)
@@ -181,9 +192,7 @@ def trainModel(args):
                         decodedSeq = decodedSeq.cpu().detach().numpy()
                         decodedSeq = np.array([i for i in decodedSeq if i != 0])
 
-                        trueSeq = np.array(
-                            y[iterIdx][0 : y_len[iterIdx]].cpu().detach()
-                        )
+                        trueSeq = np.array(y[iterIdx][0 : y_len[iterIdx]].cpu().detach())
 
                         matcher = SequenceMatcher(
                             a=trueSeq.tolist(), b=decodedSeq.tolist()
@@ -240,6 +249,7 @@ def loadModel(modelDir, nInputLayers=24, device="cuda"):
 def main(cfg):
     cfg.outputDir = os.getcwd()
     trainModel(cfg)
+
 
 if __name__ == "__main__":
     main()
