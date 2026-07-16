@@ -244,7 +244,9 @@ if __name__ == "__main__":
     datasets = []
     for dayIdx in range(len(customSessionNames)):
         print(dayIdx)
-        dataset = getDatasetSentences(dataDir + customSessionNames[dayIdx] + "_sentences.mat")
+        dataset = getDatasetSentences(
+            dataDir + customSessionNames[dayIdx] + "_sentences.mat"
+        )
         datasets.append(dataset)
 
     allDatasets = {}

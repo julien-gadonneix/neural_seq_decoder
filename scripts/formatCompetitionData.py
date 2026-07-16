@@ -205,7 +205,9 @@ if __name__ == "__main__":
         trainDatasets.append(trainDataset)
         testDatasets.append(testDataset)
 
-        if os.path.exists(dataDir + "/competitionHoldOut/" + sessionNames[dayIdx] + ".mat"):
+        if os.path.exists(
+            dataDir + "/competitionHoldOut/" + sessionNames[dayIdx] + ".mat"
+        ):
             dataset = getDataset(
                 dataDir + "/competitionHoldOut/" + sessionNames[dayIdx] + ".mat"
             )
